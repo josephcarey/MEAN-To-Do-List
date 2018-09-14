@@ -1,0 +1,26 @@
+{
+  "name": "mean-to-do-list",
+  "version": "1.0.0",
+  "description": "A to-do list app using Mongo, Express, Angular, and Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "nodemon server/server.js",
+    "start": "node server/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephcarey/MEAN-To-Do-List.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/josephcarey/MEAN-To-Do-List/issues"
+  },
+  "homepage": "https://github.com/josephcarey/MEAN-To-Do-List#readme",
+  "dependencies": {
+    "angular": "^1.7.4",
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "mongoose": "^5.2.14"
+  }
+}
