@@ -5,17 +5,10 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     console.log( 'ToDoController is ready.' );
     const self = this;
 
+
     // Data things
     self.todos = [];
 
-    // Function to clear the inputs
-    self.wipeInputs = function () {
-
-        self.NewToDo.text = "";
-        self.NewToDo.category = "";
-        self.NewToDo.completed = "";
-
-    }
 
 
     /* --------------------
@@ -26,6 +19,8 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     self.addToDo = function ( todoToAdd ) {
 
         console.log( 'Adding To Do:', todoToAdd );
+
+        todoToAdd.completed = false;
 
         // send the new to do to the server
         $http( {
@@ -68,5 +63,22 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     // UPDATE
 
     // DELETE
+
+    /* --------------------
+       End CRUD Stuff
+       ------------------*/
+
+
+    // Function to clear the inputs
+    self.wipeInputs = function () {
+
+        self.NewToDo.text = "";
+        self.NewToDo.category = "";
+        self.NewToDo.completed = "";
+
+    }
+
+    // do the initial call to the server for data
+    self.getToDos();
 
 } ); // end todoController

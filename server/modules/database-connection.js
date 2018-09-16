@@ -4,7 +4,7 @@ const mongoose = require( 'mongoose' );
 const DATABASEURL = 'mongodb://localhost:27017/MEAN-To-Dos';
 
 // connect to the database
-mongoose.connect( DATABASEURL, { userNewURLParser: true } );
+mongoose.connect( DATABASEURL, { useNewUrlParser: true } );
 
 // if the connection worked...
 mongoose.connection.on( 'connected', () => {

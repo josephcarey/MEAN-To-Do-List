@@ -12,26 +12,11 @@ const ToDo = require( '../models/todo.model.js' )
        CRUD Stuff
        ------------------*/
 
-// GET call
-router.get( '/', ( req, res ) => {
-
-    console.log( '### todo router /GET call' );
-
-    // ask the mongoose model for every record it can find
-    ToDo.find( {} )
-        .then( ( response ) => {
-
-        } ).catch( ( error ) => {
-            console.log( '### There was an error getting records from the database.' );
-            console.log( '### Error was:', error );
-        } );
-
-} ); // end GET call
-
 // POST call
 router.post( '/', ( req, res ) => {
 
-    console.log( '### todo router /POST call:', req.body );
+    console.log( '### todo router /POST call:' );
+    console.log( req.body );
 
     // send the mongoose model a create request
     ToDo.create( req.body )
@@ -41,11 +26,31 @@ router.post( '/', ( req, res ) => {
             res.sendStatus( 200 );
         } ).catch( ( error ) => {
             console.log( '### There was an error adding to the database.' );
-            console.log( '### Attempted to add:', req.body );
-            console.log( '### Error was:', error );
+            console.log( '### Attempted to add:' );
+            console.log( req.body );
+            console.log( '### Error was:' );
+            console.log( error );
         } );
 
 } ); // end POST call
+
+// GET call
+router.get( '/', ( req, res ) => {
+
+    console.log( '### todo router /GET call' );
+
+    // ask the mongoose model for every record it can find
+    ToDo.find( {} )
+        .then( ( response ) => {
+            // send the records back to the client
+            res.send( response );
+        } ).catch( ( error ) => {
+            console.log( '### There was an error getting records from the database.' );
+            console.log( '### Error was:' );
+            console.log( error );
+        } );
+
+} ); // end GET call
 
 // PUT call
 router.put( '/', ( req, res ) => {

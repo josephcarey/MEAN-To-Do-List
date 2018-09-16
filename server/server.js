@@ -19,5 +19,5 @@ require( './modules/database-connection.js' )
 
 // Spin up the server
 app.listen( PORT, () => {
-    console.log( 'Server up and listening on', PORT, '. . .' );
+    console.log( '### Server up and listening on', PORT, '. . .' );
 } ) // Snd spin up server
