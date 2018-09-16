@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Page Title</title>
+    <title>MEAN To Do App</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" media="screen" href="vendors/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
@@ -23,10 +23,10 @@
         </div>
 
         <div id="addToDoDiv">
-            <form ng-submit="vm.addToDo(vm.NewToDo)">
-                <input ng-model="vm.NewToDo.text" class="form-control" type="text" placeholder="Task Text" />
-                <input ng-model="vm.NewToDo.category" class="form-control" type="text" placeholder="Task Category" />
-                <input ng-model="vm.NewToDo.completed" class="form-control" type="text" placeholder="Task Complete" />
+            <form ng-submit="vm.addToDo(vm.newToDo)">
+                <input ng-model="vm.newToDo.text" class="form-control" type="text" placeholder="Task Text" />
+                <input ng-model="vm.newToDo.category" class="form-control" type="text" placeholder="Task Category" />
+                <input ng-model="vm.newToDo.completed" class="form-control" type="text" placeholder="Task Complete" />
                 <input class="btn btn-primary" type="submit">
             </form>
         </div>

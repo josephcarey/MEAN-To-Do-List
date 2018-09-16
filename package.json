@@ -4,7 +4,7 @@
   "description": "A to-do list app using Mongo, Express, Angular, and Node.js",
   "main": "index.js",
   "scripts": {
-    "test": "nodemon server/server.js",
+    "test": "nodemon server/server.js --ignore server/public",
     "start": "node server/server.js"
   },
   "repository": {

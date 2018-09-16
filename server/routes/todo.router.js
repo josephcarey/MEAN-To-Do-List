@@ -62,11 +62,11 @@ router.put( '/', ( req, res ) => {
 router.delete( '/', ( req, res ) => {
 
     console.log( '### todo router /DELETE call:' );
-    console.log( req.body );
+    console.log( req.query );
 
     ToDo.findOneAndDelete( req.query )
         .then( function ( response ) {
-            console.log( '### Delete was successful!' );
+            console.log( '### Delete was successful!', response );
         } ).catch( function ( error ) {
             console.log( '### Something went wrong deleting the entry in the database:' );
             console.log( error );

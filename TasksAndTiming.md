@@ -22,9 +22,11 @@
 - [ ] use Sweet Alert?
 - [ ] can we scrap app.use( bodyParser.urlencoded( { extended: true } ) ); from server.js? Is it just for jQuery?
 - [ ] clearing the inputs: we could use a for...in loop instead, but that's kinda scary.
+- [ ] spin all of the client-side connection logic out into its own object
 
 # Questions
 - [ ] do we have to stick to one giant js file on the client side?
+- [ ] questions around spinning out the client-side connection logic (promises, other js files)
 
 
 ### Timing
@@ -35,4 +37,5 @@
 
 # Sunday, 16 September 2018
 - 09:17 - 10:40                 | 1:23 | 2:09
-- 11:27 - 
+- 11:27 - 12:40                 | 1:13 | 3:22
+- 13:48 - 
