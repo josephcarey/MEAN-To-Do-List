@@ -38,6 +38,8 @@
                         <th>To Do</th>
                         <th>Category</th>
                         <th>Completed</th>
+                        <th></th>
+                        <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,8 +47,8 @@
                         <td>{{todo.text}}</td>
                         <td>{{todo.category}}</td>
                         <td>{{todo.completed}}</td>
-                        <td><button ng-click="markToDoCompleted(todo)">mark completed</button></td>
-                        <td><button ng-click="deleteToDo(todo)">delete</button></td>
+                        <td><button ng-click="vm.markToDoCompleted(todo)">mark completed</button></td>
+                        <td><button ng-click="vm.deleteToDo(todo)">delete</button></td>
                     </tr>
                 </tbody>
                 <tfoot>

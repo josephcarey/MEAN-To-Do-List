@@ -8,23 +8,27 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     // Data things
     self.todos = [];
+    self.NewToDo = {};
 
     self.addToDo = function ( newToDo ) {
+        console.log( newToDo );
+
         ServerRequest.create( newToDo );
         self.wipeInputs();
         self.getToDos();
-    }
+    } // end self.addToDo()
 
     self.getToDos = function () {
         self.todos = ServerRequest.read();
-    } // end self.GetToDos
+    } // end self.GetToDos()
 
     self.markToDoCompleted = function ( todo ) {
 
     } // end self.markToDoCompleted()
 
-    self.deleteToDo = function ( todo ) {
-
+    self.deleteToDo = function ( todoToDelete ) {
+        ServerRequest.delete( todoToDelete );
+        self.getToDos();
     } // end self.deleteToDo ()
 
     // Function to clear the inputs
@@ -42,41 +46,41 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     // maybe even we would split it out, someday.
     let ServerRequest = {
 
-        typeOfThing = 'To Do',
+        typeOfThing: 'To Do',
         URL: '/todo',
 
         // CREATE
         create: function ( thingToAdd ) {
 
-            console.log( 'Adding' + typeOfThing + ':', todoToAdd );
+            console.log( 'Adding' + this.typeOfThing + ':', thingToAdd );
 
-            todoToAdd.completed = false;
+            thingToAdd.completed = false;
 
             // send the new to do to the server
             $http( {
                 method: 'POST',
-                url: URL,
+                url: this.URL,
                 data: thingToAdd
-            } ).then( function ( response ) {
+            } ).then( function () {
 
-                console.log( typeOfThing, 'added successfully!' );
+                console.log( this.typeOfThing, 'added successfully!' );
 
             } ).catch( function ( error ) {
 
                 // if something went wrong...
-                alert( 'Something went wrong adding a new ' + typeOfThing + '.' );
+                alert( 'Something went wrong adding a new ' + this.typeOfThing + '.' );
                 console.log( 'Error in CREATE function:', error );
 
             } );
-        }, // end ServerRequest.create()
+        }, // end .create()
 
         // READ
         read: function () {
 
-            console.log( 'Getting', typeOfThing, '...' );
+            console.log( 'Getting', this.typeOfThing, '...' );
             $http( {
                 method: 'GET',
-                url: URL
+                url: this.URL
             } ).then( function ( response ) {
                 console.log( 'Back from the server with:', response.data );
 
@@ -84,17 +88,32 @@ todoApp.controller( 'ToDoController', function ( $http ) {
                 self.todos = response.data;
 
             } ).catch( function ( error ) {
-                alert( 'Something went wrong fetching the', typeOfThing, 'from the server.' );
+                alert( 'Something went wrong fetching the', this.typeOfThing, 'from the server.' );
                 console.log( 'Error in READ function:', error );
             } );
-        } // end self.getToDos()
+        }, // end .get()
 
         // UPDATE
 
+
+
         // DELETE
+        delete: function ( thingToDelete ) {
 
+            idToDelete = thingToDelete;
 
+            console.log( 'Deleting', thingToDelete );
+            $http( {
+                method: 'DELETE',
+                url: this.URL,
+                params: idToDelete
+            } ).then( function () {
 
+            } ).catch( function ( error ) {
+
+            } );
+
+        } // end .delete()
     }
 
     // do the initial call to the server for data

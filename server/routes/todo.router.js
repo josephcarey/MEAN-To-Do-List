@@ -60,7 +60,18 @@ router.put( '/', ( req, res ) => {
 
 // DELETE call
 router.delete( '/', ( req, res ) => {
-    console.log( '### todo router /DELETE call' );
+
+    console.log( '### todo router /DELETE call:' );
+    console.log( req.body );
+
+    ToDo.findOneAndDelete( req.query )
+        .then( function ( response ) {
+            console.log( '### Delete was successful!' );
+        } ).catch( function ( error ) {
+            console.log( '### Something went wrong deleting the entry in the database:' );
+            console.log( error );
+            res.sendStatus( 500 );
+        } );
 
 } ); // end DELETE call
 
