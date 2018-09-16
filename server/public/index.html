@@ -14,7 +14,7 @@
 
 </head>
 
-<body>
+<body ng-app="ToDoApp" ng-controller="ToDoController as vm">
 
     <div class="container">
 
@@ -23,10 +23,10 @@
         </div>
 
         <div id="addToDoDiv">
-            <form>
-                <input class="form-control" type="text" placeholder="Task Name" />
-                <input class="form-control" type="text" placeholder="Task Category" />
-                <input class="form-control" type="text" placeholder="Task Complete" />
+            <form ng-submit="vm.addToDo(vm.NewToDo)">
+                <input ng-model="vm.NewToDo.text" class="form-control" type="text" placeholder="Task Text" />
+                <input ng-model="vm.NewToDo.category" class="form-control" type="text" placeholder="Task Category" />
+                <input ng-model="vm.NewToDo.complete" class="form-control" type="text" placeholder="Task Complete" />
                 <input class="btn btn-primary" type="submit">
             </form>
         </div>
