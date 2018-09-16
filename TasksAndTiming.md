@@ -4,11 +4,11 @@
 ## Assignment
 
 # Base
-- [ ] use angular
-- [ ] create and store a task, refresh tasks
+- [x] use angular
+- [x] create and store a task, refresh tasks
 - [ ] task have complete, delete options
 - [ ] change styling based on whether or not task is complete (check 'ng- [ ]class')
-- [ ] store task complete in the database
+- [x] store task complete in the database
 - [ ] deleting should remove from table and database
 - [ ] change background color, font family/size
 # Stretch
@@ -29,8 +29,9 @@
 ### Timing
 
 # Friday, 14 September 2018
-- 15:30 -- 16:06
-- 16:16 -- 16:26
+- 15:30 -- 16:06                | 0:36 |
+- 16:16 -- 16:26                | 0:10 | 0:46
 
 # Sunday, 16 September 2018
-- 09:17 - 10:40
+- 09:17 - 10:40                 | 1:23 | 2:09
+- 11:27 - 

@@ -53,7 +53,11 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             method: 'GET',
             url: '/todo'
         } ).then( function ( response ) {
-            console.log( 'Back from the server with:', response );
+            console.log( 'Back from the server with:', response.data );
+
+            // set our display data equal to that response
+            self.todos = response.data;
+
         } ).catch( function ( error ) {
             alert( 'Something went wrong fetching the To Dos from the server.' );
             console.log( 'Error in READ function:', error );

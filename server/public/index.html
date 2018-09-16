@@ -26,7 +26,7 @@
             <form ng-submit="vm.addToDo(vm.NewToDo)">
                 <input ng-model="vm.NewToDo.text" class="form-control" type="text" placeholder="Task Text" />
                 <input ng-model="vm.NewToDo.category" class="form-control" type="text" placeholder="Task Category" />
-                <input ng-model="vm.NewToDo.complete" class="form-control" type="text" placeholder="Task Complete" />
+                <input ng-model="vm.NewToDo.completed" class="form-control" type="text" placeholder="Task Complete" />
                 <input class="btn btn-primary" type="submit">
             </form>
         </div>
@@ -35,23 +35,17 @@
             <table class="table table-striped">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Name</th>
+                        <th>To Do</th>
                         <th>Category</th>
-                        <th>Complete</th>
+                        <th>Completed</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>clean</td>
-                        <td>boring</td>
-                        <td>false</td>
+                    <tr ng-repeat="todo in vm.todos">
+                        <td>{{todo.text}}</td>
+                        <td>{{todo.category}}</td>
+                        <td>{{todo.completed}}</td>
                     </tr>
-                    <tr>
-                        <td>Throw away trash</td>
-                        <td>boring</td>
-                        <td>false</td>
-                    </tr>
-
                 </tbody>
                 <tfoot>
 
