@@ -21,6 +21,7 @@
 
 - [ ] use Sweet Alert?
 - [ ] can we scrap app.use( bodyParser.urlencoded( { extended: true } ) ); from server.js? Is it just for jQuery?
+- [ ] clearing the inputs: we could use a for...in loop instead, but that's kinda scary.
 
 # Questions
 

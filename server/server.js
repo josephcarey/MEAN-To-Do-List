@@ -1,7 +1,6 @@
 const express = require( 'express' );
-const mongoose = require( 'mongoose' );
-const bodyParser = require( 'body-parser' );
 const todoRouter = require( './routes/todo.router.js' );
+const bodyParser = require( 'body-parser' );
 
 const app = express();
 
@@ -12,6 +11,11 @@ app.use( bodyParser.urlencoded( { extended: true } ) );
 
 app.use( express.static( 'server/public' ) );
 app.use( '/todo', todoRouter );
+
+
+// connect to the database
+require( './modules/database-connection.js' )
+
 
 // Spin up the server
 app.listen( PORT, () => {
