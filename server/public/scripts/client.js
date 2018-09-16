@@ -9,69 +9,23 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     // Data things
     self.todos = [];
 
+    self.addToDo = function ( newToDo ) {
+        ServerRequest.create( newToDo );
+        self.wipeInputs();
+        self.getToDos();
+    }
 
-
-    /* --------------------
-       CRUD Stuff
-       ------------------*/
-
-    // CREATE
-    self.addToDo = function ( todoToAdd ) {
-
-        console.log( 'Adding To Do:', todoToAdd );
-
-        todoToAdd.completed = false;
-
-        // send the new to do to the server
-        $http( {
-            method: 'POST',
-            url: '/todo',
-            data: todoToAdd
-        } ).then( function ( response ) {
-
-            console.log( 'To Do added successfully!' );
-
-            // wipe the inputs
-            self.wipeInputs();
-
-            // get a list of all of the to dos
-            self.getToDos();
-
-        } ).catch( function ( error ) {
-
-            // if something went wrong...
-            alert( 'Something went wrong adding a new to do.' );
-            console.log( 'Error in CREATE function:', error );
-
-        } );
-    } // end self.addToDo()
-
-    // READ
     self.getToDos = function () {
-        console.log( 'Getting To Dos...' );
-        $http( {
-            method: 'GET',
-            url: '/todo'
-        } ).then( function ( response ) {
-            console.log( 'Back from the server with:', response.data );
+        self.todos = ServerRequest.read();
+    } // end self.GetToDos
 
-            // set our display data equal to that response
-            self.todos = response.data;
+    self.markToDoCompleted = function ( todo ) {
 
-        } ).catch( function ( error ) {
-            alert( 'Something went wrong fetching the To Dos from the server.' );
-            console.log( 'Error in READ function:', error );
-        } );
-    } // end self.getToDos()
+    } // end self.markToDoCompleted()
 
-    // UPDATE
+    self.deleteToDo = function ( todo ) {
 
-    // DELETE
-
-    /* --------------------
-       End CRUD Stuff
-       ------------------*/
-
+    } // end self.deleteToDo ()
 
     // Function to clear the inputs
     self.wipeInputs = function () {
@@ -82,7 +36,71 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     }
 
+    // CRUD stuff is all handled here;
+    // it helps keep the main server code more readable,
+    // and makes the CRUD code more modular;
+    // maybe even we would split it out, someday.
+    let ServerRequest = {
+
+        typeOfThing = 'To Do',
+        URL: '/todo',
+
+        // CREATE
+        create: function ( thingToAdd ) {
+
+            console.log( 'Adding' + typeOfThing + ':', todoToAdd );
+
+            todoToAdd.completed = false;
+
+            // send the new to do to the server
+            $http( {
+                method: 'POST',
+                url: URL,
+                data: thingToAdd
+            } ).then( function ( response ) {
+
+                console.log( typeOfThing, 'added successfully!' );
+
+            } ).catch( function ( error ) {
+
+                // if something went wrong...
+                alert( 'Something went wrong adding a new ' + typeOfThing + '.' );
+                console.log( 'Error in CREATE function:', error );
+
+            } );
+        }, // end ServerRequest.create()
+
+        // READ
+        read: function () {
+
+            console.log( 'Getting', typeOfThing, '...' );
+            $http( {
+                method: 'GET',
+                url: URL
+            } ).then( function ( response ) {
+                console.log( 'Back from the server with:', response.data );
+
+                // set our display data equal to that response
+                self.todos = response.data;
+
+            } ).catch( function ( error ) {
+                alert( 'Something went wrong fetching the', typeOfThing, 'from the server.' );
+                console.log( 'Error in READ function:', error );
+            } );
+        } // end self.getToDos()
+
+        // UPDATE
+
+        // DELETE
+
+
+
+    }
+
     // do the initial call to the server for data
     self.getToDos();
 
 } ); // end todoController
+
+
+

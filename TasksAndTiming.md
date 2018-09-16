@@ -24,6 +24,7 @@
 - [ ] clearing the inputs: we could use a for...in loop instead, but that's kinda scary.
 
 # Questions
+- [ ] do we have to stick to one giant js file on the client side?
 
 
 ### Timing
