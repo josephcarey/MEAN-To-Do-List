@@ -24,10 +24,10 @@
 
 <body ng-app="ToDoApp" ng-controller="ToDoController as vm">
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
 
-            <div id="titleDiv" class="col-3 text-right">
+            <div id="titleDiv" class="col-sm-3 text-right">
                 <div class="sticky-top">
 
                     <h1 class="title pt-5 text-right">todobird</h1>
@@ -38,21 +38,30 @@
             </div>
 
 
-            <div id="displaytodoDiv" class="col-9">
+            <div id="displaytodoDiv" class="col-sm-8">
 
                 <div id="displaySpacer" class="my-5">
 
                 </div>
 
-                <div class="card mb-2" ng-repeat="todo in vm.todos" ng-class="{'border-success' : todo.completed == true}">
-                    <div class="card-body" ng-class="{'text-success' : todo.completed == true}">
-                        <h5 class="card-title">{{todo.text}}</h5>
-                        <h6 class="card-subtitle mb-2">{{todo.category}}</h6>
-                        <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success">done</button></span>
-                        <button ng-click="vm.markToDoCompleted(todo)" class="btn btn-outline-info">edit</button>
-                        <button ng-click="vm.deleteToDo(todo)" class="text-right btn btn-outline-danger">delete</button>
+                <div class="card mb-3" ng-repeat="todo in vm.todos" ng-class="{'border-success' : todo.completed == true}">
+                    <div class="card-body clearfix" ng-class="{'text-success' : todo.completed == true}">
+                        <div class="float-left">
+                            <h5 class="card-title">{{todo.text}}</h5>
+                            <h6 class="card-subtitle mb-1">{{todo.category}}</h6>
+                        </div>
+                        <div class="float-right">
+                            <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success mx-2">mark
+                                    done</button></span>
+                            <button ng-click="vm.markToDoCompleted(todo)" class="btn btn-outline-info">edit</button>
+                            <button ng-click="vm.deleteToDo(todo)" class="text-right btn btn-outline-danger">delete</button>
+                        </div>
                     </div>
                 </div>
+
+            </div>
+
+            <div id="spacerDivOnLargerScreens" class="col-sm-1">
 
             </div>
         </div>
