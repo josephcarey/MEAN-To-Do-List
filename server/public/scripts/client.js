@@ -7,13 +7,18 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     // Data things
     self.todos = [];
-    // self.newToDo = {};
+    self.newToDo = {
+        completed: false
+    };
+    self.todoToEdit = {};
 
     self.addToDo = function ( thingToAdd ) {
 
         console.log( 'Adding To Do:', thingToAdd );
+        console.log( 'self.newToDo.completed:', self.newToDo.completed );
 
-        thingToAdd.completed = false;
+
+        // thingToAdd.completed = false;
 
         // send the new to do to the server
         $http( {
@@ -51,6 +56,9 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             // set our display data equal to that response
             self.todos = response.data;
 
+            // sort the data as appropriate
+
+
         } ).catch( function ( error ) {
             alert( 'Something went wrong fetching the To Dos from the server.' );
             console.log( 'Error in READ function:', error );
@@ -81,6 +89,26 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     } // end self.markToDoCompleted()
 
+
+    self.editToDo = function ( thingToUpdate ) {
+
+        $http( {
+            method: 'PUT',
+            url: '/todo',
+            params: { _id: thingToUpdate._id },
+            data: thingToUpdate
+        } ).then( function () {
+
+            // refresh the display
+            self.getToDos();
+
+        } ).catch( function ( error ) {
+            alert( 'Something went wrong updating the To Do on the server.' );
+            console.log( 'Error in UPDATE function:', error );
+        } );
+
+    }
+
     self.deleteToDo = function ( thingToDelete ) {
 
         console.log( 'Deleting', thingToDelete );
@@ -90,13 +118,32 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             params: { _id: thingToDelete._id }
         } ).then( function () {
 
+            // refresh the display
+            self.getToDos();
+
         } ).catch( function ( error ) {
 
         } );
 
-        self.getToDos();
-
     } // end self.deleteToDo ()
+
+    self.toggleCompleted = function ( $event ) {
+        self.newToDo.completed = !self.newToDo.completed;
+        $event.preventDefault();
+    }
+
+    self.toggleEditCompleted = function ( $event ) {
+        self.todoToEdit.completed = !self.todoToEdit.completed;
+        $event.preventDefault();
+    }
+
+    self.loadForEditing = function ( todoToEdit ) {
+        console.log( 'self.editToDo:', self.editToDo );
+        console.log( 'todoToEdit:', todoToEdit );
+        self.todoToEdit = todoToEdit;
+        console.log( 'self.editToDo:', self.editToDo );
+        console.log( 'todoToEdit:', todoToEdit );
+    }
 
     // Function to clear the inputs
     self.wipeInputs = function () {
@@ -105,8 +152,19 @@ todoApp.controller( 'ToDoController', function ( $http ) {
         self.newToDo.completed = "";
     }
 
-    // do the initial call to the server for data
-    self.getToDos();
+    self.firstTime = function () {
+
+        // do the initial call to the server for data
+        self.getToDos();
+
+        // if there isn't any data there, let's add some
+        let firstTimetodos = [
+            { text: 'text', category: 'category', completed: 'false' }
+        ]
+
+    };
+
+    self.firstTime();
 
 } ); // end todoController
 
