@@ -64,7 +64,7 @@
                     <div class="card-body clearfix" ng-class="{'text-success' : todo.completed == true}">
                         <div class="float-left">
                             <h5 class="card-title">{{todo.text}}</h5>
-                            <h6 class="card-subtitle mb-1">{{todo.category}}</h6>
+                            <h6 class="card-subtitle mb-1" ng-class="{'text-muted': todo.completed == false}">{{todo.category}}</h6>
                         </div>
                         <div class="float-right">
                             <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success mx-2">mark

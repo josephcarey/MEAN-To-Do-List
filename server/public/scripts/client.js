@@ -5,6 +5,8 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     console.log( 'ToDoController is ready.' );
     const self = this;
 
+    self.firstTimeThrough = true;
+
     // Data things
     self.todos = [];
     self.newToDo = {
@@ -15,12 +17,6 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     self.categories = [''];
 
     self.addToDo = function ( thingToAdd ) {
-
-        console.log( 'Adding To Do:', thingToAdd );
-        console.log( 'self.newToDo.completed:', self.newToDo.completed );
-
-
-        // thingToAdd.completed = false;
 
         // send the new to do to the server
         $http( {
@@ -83,10 +79,17 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
             self.updateCategories();
 
+            if ( self.firstTimeThrough ) {
+                self.firstTimeThrough = false;
+                self.firstTime();
+            }
+
 
         } ).catch( function ( error ) {
             alert( 'Something went wrong fetching the To Dos from the server.' );
             console.log( 'Error in READ function:', error );
+
+            return false;
         } );
 
     } // end self.GetToDos()
@@ -180,17 +183,28 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     self.firstTime = function () {
 
-        // do the initial call to the server for data
-        self.getToDos();
+        console.log( 'first time check:', self.todos );
 
-        // if there isn't any data there, let's add some
-        let firstTimetodos = [
-            { text: 'text', category: 'category', completed: 'false' }
-        ];
+        if ( self.todos.length < 1 ) {
 
+            // if there isn't any data there, let's add some
+            let firstTimetodos = [
+                { text: 'try adding a new todo', category: 'learning', completed: 'false' },
+                { text: 'try editing this todo', category: 'learning', completed: 'false' },
+                { text: 'try marking this todo as done', category: 'learning', completed: 'false' },
+                { text: 'try selecting a category', category: 'categories', completed: 'false' },
+                { text: 'try deleting these and filling in your own todos', category: 'awesome user', completed: 'false' }
+            ];
+
+            for ( todo of firstTimetodos ) {
+                self.addToDo( todo );
+            };
+
+        };
     };
 
-    self.firstTime();
+    // do the initial call to the server for data
+    self.getToDos();
 
 } ); // end todoController
 
