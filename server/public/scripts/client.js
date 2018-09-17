@@ -2,12 +2,11 @@ const todoApp = angular.module( 'ToDoApp', [] );
 
 todoApp.controller( 'ToDoController', function ( $http ) {
 
-    console.log( 'ToDoController is ready.' );
     const self = this;
 
+    // Data things
     self.firstTimeThrough = true;
 
-    // Data things
     self.todos = [];
     self.newToDo = {
         completed: false
@@ -15,6 +14,11 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     self.todoToEdit = {};
     self.todoToDelete = {};
     self.categories = [''];
+
+
+    /* --------------------
+       CRUD Stuff
+    -------------------- */
 
     self.addToDo = function ( thingToAdd ) {
 
@@ -25,9 +29,10 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             data: thingToAdd
         } ).then( function () {
 
-            console.log( 'To Do added successfully!' );
-
+            // clean up the inputs
             self.wipeInputs();
+
+            // get the list of to dos from the server
             self.getToDos();
 
         } ).catch( function ( error ) {
@@ -38,18 +43,15 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
         } );
 
-
-
     } // end self.addToDo()
 
     self.getToDos = function () {
 
-        console.log( 'Getting To Dos...' );
+        // get the to dos from the server
         $http( {
             method: 'GET',
             url: '/todo'
         } ).then( function ( response ) {
-            console.log( 'Back from the server with:', response.data );
 
             // set our display data equal to that response
             self.todos = response.data;
@@ -77,30 +79,23 @@ todoApp.controller( 'ToDoController', function ( $http ) {
                 }
             } );
 
+            // fill out the categories
             self.updateCategories();
 
+            // if this is the first time, call first time (which checks if the list is blank)
             if ( self.firstTimeThrough ) {
                 self.firstTimeThrough = false;
                 self.firstTime();
             }
 
-
         } ).catch( function ( error ) {
+
             alert( 'Something went wrong fetching the To Dos from the server.' );
             console.log( 'Error in READ function:', error );
 
-            return false;
         } );
 
     } // end self.GetToDos()
-
-    self.markToDoCompleted = function ( thingToMarkCompleted ) {
-
-        console.log( 'Marking as completed:', thingToMarkCompleted );
-        thingToMarkCompleted.completed = true;
-        self.editToDo( thingToMarkCompleted );
-
-    } // end self.markToDoCompleted()
 
 
     self.editToDo = function ( thingToUpdate ) {
@@ -120,7 +115,7 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             console.log( 'Error in UPDATE function:', error );
         } );
 
-    }
+    } // end self.editToDo()
 
     self.setDelete = function ( thingWeMightDelete ) {
         self.todoToDelete = thingWeMightDelete;
@@ -128,7 +123,6 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     self.doDelete = function () {
 
-        console.log( 'Deleting', self.todoToDelete );
         $http( {
             method: 'DELETE',
             url: '/todo',
@@ -140,25 +134,46 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
         } ).catch( function ( error ) {
 
+            alert( 'Something went wrong deleting the To Do on the server.' );
+            console.log( 'Error in DELETE function:', error );
+
         } );
 
     } // end self.deleteToDo ()
 
+
+
+    /* --------------------
+       Functions
+    -------------------- */
+
+    self.markToDoCompleted = function ( thingToMarkCompleted ) {
+
+        // mark the thing as completed
+        thingToMarkCompleted.completed = true;
+
+        // call the edit function
+        self.editToDo( thingToMarkCompleted );
+
+    } // end self.markToDoCompleted()
+
     self.toggleCompleted = function ( $event ) {
         self.newToDo.completed = !self.newToDo.completed;
         $event.preventDefault();
-    }
+    } // self.toggleCompleted()
 
     self.toggleEditCompleted = function ( $event ) {
         self.todoToEdit.completed = !self.todoToEdit.completed;
         $event.preventDefault();
-    }
+    } // self.toggleEditCompleted()
 
     self.loadForEditing = function ( todoToEdit ) {
         self.todoToEdit = todoToEdit;
-    }
+    } // self.loadForEditing()
 
     self.updateCategories = function () {
+
+        // get a list of all of the categories that exist on entries
         self.categories = [];
         self.categories.push( '' );
         for ( todo of self.todos ) {
@@ -172,18 +187,16 @@ todoApp.controller( 'ToDoController', function ( $http ) {
                 self.categories.push( todo.category );
             }
         }
-    }
+    } // self.updateCategories()
 
     // Function to clear the inputs
     self.wipeInputs = function () {
         self.newToDo.text = "";
         self.newToDo.category = "";
         self.newToDo.completed = "";
-    }
+    } // self.wipeInputs()
 
     self.firstTime = function () {
-
-        console.log( 'first time check:', self.todos );
 
         if ( self.todos.length < 1 ) {
 
@@ -201,7 +214,7 @@ todoApp.controller( 'ToDoController', function ( $http ) {
             };
 
         };
-    };
+    }; // self.firstTime()
 
     // do the initial call to the server for data
     self.getToDos();
