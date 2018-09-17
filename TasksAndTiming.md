@@ -6,10 +6,10 @@
 # Base
 - [x] use angular
 - [x] create and store a task, refresh tasks
-- [ ] task have complete, delete options
-- [ ] change styling based on whether or not task is complete (check 'ng- [ ]class')
+- [x] task have complete, delete options
+- [x] change styling based on whether or not task is complete (check 'ng- [ ]class')
 - [x] store task complete in the database
-- [ ] deleting should remove from table and database
+- [x] deleting should remove from table and database
 - [ ] change background color, font family/size
 # Stretch
 - [x] add Bootstrap
@@ -28,6 +28,17 @@
 - [ ] do we have to stick to one giant js file on the client side?
 - [ ] questions around spinning out the client-side connection logic (promises, other js files)
 
+# To Do
+- [ ] Pop up works
+- [ ] Pop up confirm delete works
+- [ ] Pop up edit works
+- [ ] filter by category
+
+# Stretch
+- [ ] Initialized to dos if blank
+- [ ] Color scheme
+- [ ] Font
+- [ ] Sidebar
 
 ### Timing
 

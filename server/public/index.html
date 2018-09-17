@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>MEAN To Do App</title>
+    <title>todobird</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" media="screen" href="vendors/bootstrap.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
@@ -24,47 +24,104 @@
 
 <body ng-app="ToDoApp" ng-controller="ToDoController as vm">
 
-    <div class="container">
+    <div class="container-fluid">
+        <div class="row">
 
-        <div id="headerDiv" class="jumbotron">
-            <h1>To Do List App</h1>
-        </div>
+            <div id="titleDiv" class="col-3 text-right">
+                <div class="sticky-top">
 
-        <div id="addToDoDiv">
-            <form ng-submit="vm.addToDo(vm.newToDo)">
-                <input ng-model="vm.newToDo.text" class="form-control" type="text" placeholder="Task Text" />
-                <input ng-model="vm.newToDo.category" class="form-control" type="text" placeholder="Task Category" />
-                <input ng-model="vm.newToDo.completed" class="form-control" type="text" placeholder="Task Complete" />
-                <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                    <label class="btn btn-secondary active">
-                        <input type="radio" name="options" id="option1" value="true" autocomplete="off">Pending
-                    </label>
-                    <label class="btn btn-secondary">
-                        <input type="radio" name="options" id="option2" value="false" autocomplete="off">Complete
-                    </label>
-                </div>
-                <input class="btn btn-primary" type="submit">
-            </form>
-        </div>
-        <div id="displayToDoDiv">
-
-            <div>
-                <h2>to dos:</h2>
-            </div>
-
-            <div class="card mb-2" ng-repeat="todo in vm.todos" ng-class="{'border-success' : todo.completed == true}">
-                <div class="card-body" ng-class="{'text-success' : todo.completed == true}">
-                    <h5 class="card-title">{{todo.text}}</h5>
-                    <h6 class="card-subtitle mb-2">{{todo.category}}</h6>
-
-                    <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success">done</button></span>
-                    <button ng-click="vm.markToDoCompleted(todo)" class="btn btn-outline-info">edit</button>
-                    <button ng-click="vm.deleteToDo(todo)" class="text-right btn btn-outline-danger">delete</button>
+                    <h1 class="title pt-5 text-right">todobird</h1>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addtodoModal">
+                        add new todo
+                    </button>
                 </div>
             </div>
 
-        </div>
 
+            <div id="displaytodoDiv" class="col-9">
+
+                <div id="displaySpacer" class="my-5">
+
+                </div>
+
+                <div class="card mb-2" ng-repeat="todo in vm.todos" ng-class="{'border-success' : todo.completed == true}">
+                    <div class="card-body" ng-class="{'text-success' : todo.completed == true}">
+                        <h5 class="card-title">{{todo.text}}</h5>
+                        <h6 class="card-subtitle mb-2">{{todo.category}}</h6>
+                        <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success">done</button></span>
+                        <button ng-click="vm.markToDoCompleted(todo)" class="btn btn-outline-info">edit</button>
+                        <button ng-click="vm.deleteToDo(todo)" class="text-right btn btn-outline-danger">delete</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="addtodoModal" tabindex="-1" role="dialog" aria-labelledby="addtodoModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="addtodoModalLabel">add new todo</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+
+                <div class="modal-body">
+
+                    <form ng-submit="vm.addToDo(vm.newToDo)">
+                        <div class="form-group row">
+                            <label for="textIn" class="col-3 col-form-label">title</label>
+                            <div class="col-9">
+                                <input id="textIn" ng-model="vm.newToDo.text" class="form-control" type="text"
+                                    placeholder="task title" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="categoryIn" class="col-3 col-form-label">category</label>
+                            <div class="col-9">
+                                <input id="categoryIn" ng-model="vm.newToDo.category" class="form-control" type="text"
+                                    placeholder="Task Category" />
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="completionIn" class="col-3 col-form-label">completion</label>
+                            <div class="col-9">
+                                <div id="completionIn" ng-model="vm.newToDo.completed" class="btn-group btn-group-toggle"
+                                    data-toggle="buttons">
+                                    <label class="btn btn-outline-secondary active">
+                                        <input type="radio" name="options" id="option1" value="true" autocomplete="off">pending
+                                    </label>
+                                    <label class="btn btn-outline-secondary">
+                                        <input type="radio" name="options" id="option2" value="false" autocomplete="off">complete
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-3">
+
+                            </div>
+                            <div class="col-9">
+                                <input class="btn btn-primary" type="submit" hidden>
+                            </div>
+                        </div>
+                    </form>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" ng-click="vm.addToDo(vm.newToDo)" class="btn btn-secondary">add + add another</button>
+                    <button type="button" ng-click="vm.addToDo(vm.newToDo)" class="btn btn-primary" data-dismiss="modal">add</button>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>
