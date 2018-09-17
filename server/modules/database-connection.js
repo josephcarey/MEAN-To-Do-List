@@ -1,7 +1,7 @@
 const mongoose = require( 'mongoose' );
 
 // Where to find the database
-const DATABASEURL = 'mongodb://localhost:27017/MEAN-To-Dos';
+const DATABASEURL = process.env.MONGODB_URI || 'mongodb://localhost:27017/MEAN-To-Dos';
 
 // connect to the database
 mongoose.connect( DATABASEURL, { useNewUrlParser: true } );
