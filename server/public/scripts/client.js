@@ -11,6 +11,8 @@ todoApp.controller( 'ToDoController', function ( $http ) {
         completed: false
     };
     self.todoToEdit = {};
+    self.todoToDelete = {};
+    self.categories = [''];
 
     self.addToDo = function ( thingToAdd ) {
 
@@ -58,6 +60,29 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
             // sort the data as appropriate
 
+            // by text...
+            self.todos.sort( function ( a, b ) {
+                let x = a.text.toLowerCase();
+                let y = b.text.toLowerCase();
+                if ( x < y ) { return -1; }
+                if ( x > y ) { return 1; }
+                return 0;
+            } );
+
+            // and then by completion
+            self.todos.sort( function ( a, b ) {
+
+                if ( a.completed && !b.completed ) {
+                    return 1;
+                } else if ( b.completed && !a.completed ) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            } );
+
+            self.updateCategories();
+
 
         } ).catch( function ( error ) {
             alert( 'Something went wrong fetching the To Dos from the server.' );
@@ -66,26 +91,11 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     } // end self.GetToDos()
 
-    self.markToDoCompleted = function ( thingToUpdate ) {
+    self.markToDoCompleted = function ( thingToMarkCompleted ) {
 
-        console.log( 'Marking as completed:', thingToUpdate );
-
-        thingToUpdate.completed = true;
-
-        $http( {
-            method: 'PUT',
-            url: '/todo',
-            params: { _id: thingToUpdate._id },
-            data: thingToUpdate
-        } ).then( function () {
-
-            // refresh the display
-            self.getToDos();
-
-        } ).catch( function ( error ) {
-            alert( 'Something went wrong updating the To Do on the server.' );
-            console.log( 'Error in UPDATE function:', error );
-        } );
+        console.log( 'Marking as completed:', thingToMarkCompleted );
+        thingToMarkCompleted.completed = true;
+        self.editToDo( thingToMarkCompleted );
 
     } // end self.markToDoCompleted()
 
@@ -109,13 +119,17 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     }
 
-    self.deleteToDo = function ( thingToDelete ) {
+    self.setDelete = function ( thingWeMightDelete ) {
+        self.todoToDelete = thingWeMightDelete;
+    }
 
-        console.log( 'Deleting', thingToDelete );
+    self.doDelete = function () {
+
+        console.log( 'Deleting', self.todoToDelete );
         $http( {
             method: 'DELETE',
             url: '/todo',
-            params: { _id: thingToDelete._id }
+            params: { _id: self.todoToDelete._id }
         } ).then( function () {
 
             // refresh the display
@@ -138,11 +152,23 @@ todoApp.controller( 'ToDoController', function ( $http ) {
     }
 
     self.loadForEditing = function ( todoToEdit ) {
-        console.log( 'self.editToDo:', self.editToDo );
-        console.log( 'todoToEdit:', todoToEdit );
         self.todoToEdit = todoToEdit;
-        console.log( 'self.editToDo:', self.editToDo );
-        console.log( 'todoToEdit:', todoToEdit );
+    }
+
+    self.updateCategories = function () {
+        self.categories = [];
+        self.categories.push( '' );
+        for ( todo of self.todos ) {
+            let alreadyPresent = false;
+            for ( j = 0; j < self.categories.length; j++ ) {
+                if ( todo.category == self.categories[j] ) {
+                    alreadyPresent = true;
+                }
+            }
+            if ( alreadyPresent === false ) {
+                self.categories.push( todo.category );
+            }
+        }
     }
 
     // Function to clear the inputs
@@ -160,7 +186,7 @@ todoApp.controller( 'ToDoController', function ( $http ) {
         // if there isn't any data there, let's add some
         let firstTimetodos = [
             { text: 'text', category: 'category', completed: 'false' }
-        ]
+        ];
 
     };
 
