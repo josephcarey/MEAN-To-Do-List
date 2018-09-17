@@ -58,7 +58,26 @@ todoApp.controller( 'ToDoController', function ( $http ) {
 
     } // end self.GetToDos()
 
-    self.markToDoCompleted = function ( todoToUpdate ) {
+    self.markToDoCompleted = function ( thingToUpdate ) {
+
+        console.log( 'Marking as completed:', thingToUpdate );
+
+        thingToUpdate.completed = true;
+
+        $http( {
+            method: 'PUT',
+            url: '/todo',
+            params: { _id: thingToUpdate._id },
+            data: thingToUpdate
+        } ).then( function () {
+
+            // refresh the display
+            self.getToDos();
+
+        } ).catch( function ( error ) {
+            alert( 'Something went wrong updating the To Do on the server.' );
+            console.log( 'Error in UPDATE function:', error );
+        } );
 
     } // end self.markToDoCompleted()
 
@@ -85,11 +104,6 @@ todoApp.controller( 'ToDoController', function ( $http ) {
         self.newToDo.category = "";
         self.newToDo.completed = "";
     }
-
-    // CRUD stuff is all handled here;
-    // it helps keep the main server code more readable,
-    // and makes the CRUD code more modular;
-    // maybe even we would split it out, someday.
 
     // do the initial call to the server for data
     self.getToDos();

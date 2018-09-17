@@ -55,6 +55,21 @@ router.get( '/', ( req, res ) => {
 // PUT call
 router.put( '/', ( req, res ) => {
     console.log( '### todo router /PUT call' );
+    console.log( req.query, req.body );
+
+    ToDo.findOneAndUpdate( req.query, {
+        text: req.body.text,
+        category: req.body.category,
+        completed: req.body.completed
+    } )
+        .then( function ( response ) {
+            console.log( '### Update was successful!', response );
+            res.sendStatus( 200 );
+        } ).catch( function ( error ) {
+            console.log( '### Something went wrong deleting the entry in the database:' );
+            console.log( error );
+            res.sendStatus( 500 );
+        } );
 
 } ); // end PUT call
 
@@ -67,6 +82,7 @@ router.delete( '/', ( req, res ) => {
     ToDo.findOneAndDelete( req.query )
         .then( function ( response ) {
             console.log( '### Delete was successful!', response );
+            res.sendStatus( 200 );
         } ).catch( function ( error ) {
             console.log( '### Something went wrong deleting the entry in the database:' );
             console.log( error );

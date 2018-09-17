@@ -10,6 +10,14 @@
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
 
     <script src="vendors/angular.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+
     <script src="scripts/client.js"></script>
 
 </head>
@@ -18,7 +26,7 @@
 
     <div class="container">
 
-        <div id="headerDiv">
+        <div id="headerDiv" class="jumbotron">
             <h1>To Do List App</h1>
         </div>
 
@@ -27,34 +35,33 @@
                 <input ng-model="vm.newToDo.text" class="form-control" type="text" placeholder="Task Text" />
                 <input ng-model="vm.newToDo.category" class="form-control" type="text" placeholder="Task Category" />
                 <input ng-model="vm.newToDo.completed" class="form-control" type="text" placeholder="Task Complete" />
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                        <input type="radio" name="options" id="option1" value="true" autocomplete="off">Pending
+                    </label>
+                    <label class="btn btn-secondary">
+                        <input type="radio" name="options" id="option2" value="false" autocomplete="off">Complete
+                    </label>
+                </div>
                 <input class="btn btn-primary" type="submit">
             </form>
         </div>
         <div id="displayToDoDiv">
 
-            <table class="table table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>To Do</th>
-                        <th>Category</th>
-                        <th>Completed</th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="todo in vm.todos">
-                        <td>{{todo.text}}</td>
-                        <td>{{todo.category}}</td>
-                        <td>{{todo.completed}}</td>
-                        <td><button ng-click="vm.markToDoCompleted(todo)">mark completed</button></td>
-                        <td><button ng-click="vm.deleteToDo(todo)">delete</button></td>
-                    </tr>
-                </tbody>
-                <tfoot>
+            <div>
+                <h2>to dos:</h2>
+            </div>
 
-                </tfoot>
-            </table>
+            <div class="card mb-2" ng-repeat="todo in vm.todos" ng-class="{'border-success' : todo.completed == true}">
+                <div class="card-body" ng-class="{'text-success' : todo.completed == true}">
+                    <h5 class="card-title">{{todo.text}}</h5>
+                    <h6 class="card-subtitle mb-2">{{todo.category}}</h6>
+
+                    <span ng-show="!todo.completed"><button ng-click="vm.markToDoCompleted(todo)" class="btn btn-success">done</button></span>
+                    <button ng-click="vm.markToDoCompleted(todo)" class="btn btn-outline-info">edit</button>
+                    <button ng-click="vm.deleteToDo(todo)" class="text-right btn btn-outline-danger">delete</button>
+                </div>
+            </div>
 
         </div>
 
